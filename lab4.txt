@@ -1,0 +1,185 @@
+Name:  James Bryant Connell
+CSC 1301 Lab 4
+
+1.  Decimal: 186
+	Steps: 128 + 32 + 16 + 8 + 2 = 186
+	Hexadecimal: BA
+	Steps:  186 // 16 = 11 R 10 = A
+			11 // 16 = 0 R 11 = B
+
+2.	Decimal: 243
+	Steps:  128 + 64 + 32 + 16 + 2 + 1 = 24
+	Hexadecimal: F3
+	Steps:  243 // 16 = 15 R 3
+			15 // 16 = 0 R 15 = F
+
+3.	Decimal: 170
+	Steps: 128 + 32 + 8 + 2 = 170
+	Hexadecimal: AA
+	Steps:	170 // 16 = 10 R 10 = A
+			10 // 16 = 0 R 10 = A
+
+4.  Decimal: 254
+	Steps: 255 - 1 = 254
+	Hexadecimal = FE
+	Steps: 16 * 15 (F) + 14 (E) = 254
+
+5.  Decimal: 219
+	Steps: 128 + 64 + 16 + 8 + 2 + 1 = 219
+	Hexadecimal: DB
+	Steps: 219 // 16 = 13 R 11 = B
+			13 // 16 = 0 R 13 = D
+
+6.  Decimal: 745
+	Steps: 2 * 256 + 14 * 16 + 9 = 745
+	Binary: 1011101001
+	Steps:	745 / 2 = 372 R 1
+			372 / 2 = 186 R 0
+			186 / 2 = 93  R 0
+			93 / 2 = 46 R 1
+			46 / 2 = 23 R 0
+			23 / 2 = 11 R 1
+			11 / 2 = 5 R 1
+			5 / 2 = 2 R 1
+			2 / 2 = 1 R 0
+			1 / 2 = 0 R 1
+
+7.  Decimal: 2766
+	Steps: 256 * 10 + 16 * 12 + 14 = 2766
+	Binary: 101011001110
+	Steps:	2766 / 2 = 1383 R 0
+			1383 / 2 = 691 R 1
+			691 / 2 = 345 R 1
+			345 / 2 = 172 R 1
+			172 / 2 = 86 R 0
+			86 / 2 = 43 R 0
+			43 / 2 = 21 R 1
+			21 / 2 = 10 R 1
+			10 / 2 = 5 R 0
+			5 / 2 = 2 R 1
+			2 / 2 = 1 R 0
+			1 / 2 = 0 R 1
+
+8.	Decimal: 255
+	Steps: 16 * 15 (F) + 15 (F) = 255
+	Binary: 11111111
+	Steps: 100000000 (256) - 1 = 11111111
+
+9.  dec2bin: 	1. Input num
+				2. Declare StringBuffer bin
+				3. Set variable int q to 1
+				4. Declare int r;
+				5. Begin loop while q != (not equals) 0
+					a.  r = num % 2 (the remainder when num is divided by 2)
+					b.  q = cast to integer (num / 2) integer division
+					c.  num = q
+					d.  bin.append(r) add r to the end of bin
+				6. bin.reverse reverse StringBuffer bin
+				7. Print out bin as a string
+
+  dec2hex: 	1. Input num
+				2. Declare StringBuffer hex
+				3. Set variable int q to 1
+				4. Declare int r;
+				5. Declare char ans;
+				6. Begin loop while q != (not equals) 0
+					a.  r = num % 16 (the remainder when num is divided by 16)
+						i) Create a swtich for r 
+						ii)  Case r == (equals) 15 
+							 Assign 'F' to ans
+							 break
+						iii) Case r == (equals) 14
+							 Assign 'E' to ans
+							 break
+						iv)  Case r == (equals) 13
+							 Assign 'D' to ans
+							 break
+						v)   Case r == (equals) 12
+							 Assign 'C' to ans
+							 break
+						vi)  Case r == (equals)  11
+							 Assign 'B' to ans
+							 break
+						vii) Case r == (equals) 10
+							 Assign 'A' to ans
+							 break
+						viii) Default Case
+							Assign r to ans
+
+					b.  q = cast to integer (num / 16) integer division
+					c.  num = q
+					d.  hex.append(ans) add ans to the end of hex
+				7. hex.reverse reverse StringBuffer hex
+				8. Print out hex as a string
+
+
+	Example Java code for decimal to binary (with fraction):
+	public static int len1;
+	private static String dec2bin(double num1) {
+		StringBuffer bin = new StringBuffer();
+		StringBuffer test = new StringBuffer();
+		int q = 1;
+		int r;
+		len1 = 0;
+		String num = String.valueOf(num1);
+		String[] rem = num.split("\\.");
+		if  (Double.parseDouble(rem[1]) != 0) {
+			int radix = num.indexOf(".");
+			len1 = (num.length() - radix - 1);
+		}
+		double mult = Math.pow(2, len1);
+		double num2 = num1 * mult;
+		while (q != 0) {
+			r = (int) (num2 % 2);
+			q = (int) (num2 / 2);
+			num2 = q;
+			bin.append(r);	
+		}
+		if  (Double.parseDouble(rem[1]) != 0) {
+			int lob = bin.length();
+			double trunc = Double.parseDouble(rem[0]);
+			q = 1;
+			while (q!=0) {
+				r = (int) (trunc % 2);
+				q = (int) (trunc / 2);
+				trunc = q;
+				test.append(r);
+			}
+			int slen = test.length();
+			bin.insert(lob - slen, ".");
+		}
+		bin.reverse();
+		return bin.toString();
+	}
+
+10.  Convert 45 to binary
+	dec2bin: 	1. Input 45 as num
+				2. Declare StringBuffer bin
+				3. Set variable int q to 1
+				4. Declare int r;
+				5. Begin Loop:
+					r = 45 % 2 = 1
+					q = 45 / 2 = 22
+					num becomes 22
+					append 1
+					r = 22 % 2 = 0
+					q = 22 / 2 = 11
+					num becomes 11
+					append 0
+					r = 11 % 2 = 1
+					q = 11 / 2 = 5
+					num becomes 5
+					append 1
+					r = 5 % 2 = 1
+					q = 5 / 2 = 2
+					num becomes 2
+					append 1
+					r = 2 % 2 = 0
+					q = 2 / 2 = 1
+					num becomes 1
+					append 0
+					append 1
+
+				6. bin.reverse reverse StringBuffer bin
+				7. Print out bin as a string
+
